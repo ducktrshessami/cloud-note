@@ -2,8 +2,10 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 
+const dbDir = path.resolve(__dirname, "db");
+const dbPath = path.join(dbDir, "db.json");
+
 const PORT = process.env.PORT || 5366;
-const dbPath = path.resolve(__dirname, "db", "db.json");
 
 var app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -71,11 +73,29 @@ app.delete("/api/notes/:id", (request, response) => {
 });
 
 // Start server
-app.listen(PORT, function() {
-    console.log(`Listening on PORT ${PORT}`);
-});
+if (initDb()) {
+    app.listen(PORT, function() {
+        console.log(`Listening on PORT ${PORT}`);
+    });
+}
 
 // Utils
+
+// Initialize/verify the existence of the database
+function initDb() {
+    try {
+        if (!fs.existsSync(dbDir)) {
+            fs.mkdirSync(dbDir);
+        }
+        if (!fs.existsSync(dbPath)) {
+            fs.writeFileSync(dbPath, "[]");
+        }
+        return true;
+    }
+    catch {
+        return false;
+    }
+}
 
 // Update the database file
 function updateDb(db) {
