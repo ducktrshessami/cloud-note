@@ -57,5 +57,22 @@ function Note(title, text) {
 
 // Generate a unique ID
 function UID(length, salt) {
-    
+    const charset = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let output = "";
+    length = Math.max(0, Math.floor(length));
+    for (let i = 0; i < length; i++) {
+        let index = randomIndex(charset);
+        if (salt) {
+            index = (index + randomIndex(salt)) % charset.length;
+        }
+        output += charset[index];
+    }
+    return output;
+}
+
+// Get a random index from an iterable with a length
+function randomIndex(iterable) {
+    if (iterable.length) {
+        return Math.floor(Math.random() * iterable.length);
+    }
 }
