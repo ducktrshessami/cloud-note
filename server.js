@@ -52,7 +52,22 @@ app.post("/api/notes", (request, response) => {
 
 // Delete a note from db
 app.delete("/api/notes/:id", (request, response) => {
-
+    let db = require(dbPath);
+    let i = db.findIndex(note => note.id === request.params.id);
+    if (i !== -1) {
+        db.splice(i, 1);
+        updateDb(db)
+            .then(() => {
+                response.status(200).end();
+            })
+            .catch(error => {
+                console.error(error);
+                response.status(500).end();
+            });
+    }
+    else {
+        response.status(400).end();
+    }
 });
 
 // Start server
