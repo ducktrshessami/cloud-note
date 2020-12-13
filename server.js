@@ -5,7 +5,6 @@ const fs = require("fs");
 const PORT = process.env.PORT || 5366;
 
 var app = express();
-var db = require("./db/db.json");
 
 // Pages
 app.get("/", (request, response) => {
@@ -31,7 +30,7 @@ app.get("/assets/:dir/:file", (request, response) => {
 
 // Get all notes from db
 app.get("/api/notes", (request, response) => {
-    response.status(200).json(db);
+    response.status(200).json(require("./db/db.json"));
 });
 
 // Post a new note to db
