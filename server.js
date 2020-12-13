@@ -47,3 +47,15 @@ app.delete("/api/notes/:id", (request, response) => {
 app.listen(PORT, function() {
     console.log(`Listening on PORT ${PORT}`);
 });
+
+// Note object
+function Note(title, text) {
+    this.title = title;
+    this.text = text;
+    this.id = UID(10, title + text);
+}
+
+// Generate a unique ID
+function UID(length, salt) {
+    
+}
