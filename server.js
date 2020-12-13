@@ -26,6 +26,23 @@ app.get("/assets/:dir/:file", (request, response) => {
     }
 });
 
+// API
+
+// Get all notes from db
+app.get("/api/notes", (request, response) => {
+
+});
+
+// Post a new note to db
+app.post("/api/notes", (request, response) => {
+
+});
+
+// Delete a note from db
+app.delete("/api/notes/:id", (request, response) => {
+
+});
+
 // Start server
 app.listen(PORT, function() {
     console.log(`Listening on PORT ${PORT}`);
