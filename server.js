@@ -5,6 +5,8 @@ const fs = require("fs");
 const PORT = process.env.PORT || 5366;
 
 var app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Pages
 app.get("/", (request, response) => {
