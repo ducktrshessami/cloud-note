@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 const PORT = process.env.PORT || 5366;
+const dbPath = path.resolve(__dirname, "db", "db.json");
 
 var app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -32,12 +33,21 @@ app.get("/assets/:dir/:file", (request, response) => {
 
 // Get all notes from db
 app.get("/api/notes", (request, response) => {
-    response.status(200).json(require("./db/db.json"));
+    response.status(200).sendFile(dbPath);
 });
 
 // Post a new note to db
 app.post("/api/notes", (request, response) => {
-
+    let db = require(dbPath);
+    db.push(new Note(request.body.title, request.body.text));
+    updateDb(db)
+        .then(() => {
+            response.status(200).end();
+        })
+        .catch(error => {
+            console.error(error);
+            response.status(500).end();
+        });
 });
 
 // Delete a note from db
@@ -49,6 +59,13 @@ app.delete("/api/notes/:id", (request, response) => {
 app.listen(PORT, function() {
     console.log(`Listening on PORT ${PORT}`);
 });
+
+// Utils
+
+// Update the database file
+function updateDb(db) {
+    return fs.promises.writeFile(dbPath, JSON.stringify(db));
+}
 
 // Note object
 function Note(title, text) {
