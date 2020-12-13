@@ -71,7 +71,7 @@ function updateDb(db) {
 function Note(title, text) {
     this.title = title;
     this.text = text;
-    this.id = UID(10, title + text);
+    this.id = UID(16, title + text);
 }
 
 // Generate a unique ID
