@@ -117,7 +117,7 @@ function UID(length, salt) {
     for (let i = 0; i < length; i++) {
         let index = randomIndex(charset);
         if (salt) {
-            index = (index + randomIndex(salt)) % charset.length;
+            index = (index + salt.charCodeAt(randomIndex(salt))) % charset.length;
         }
         output += charset[index];
     }
