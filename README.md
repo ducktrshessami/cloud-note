@@ -28,8 +28,8 @@ npm run start
 
 <summary>Expand/Collapse</summary>
 
-![Homepage]()
+![Homepage](./assets/images/sc1.png)
 
-![Notepad]()
+![Notepad](./assets/images/sc2.png)
 
 </details>
