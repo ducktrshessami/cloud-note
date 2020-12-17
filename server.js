@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const uuid = require("uuid");
 
 const dbDir = path.resolve(__dirname, "db");
 const dbPath = path.join(dbDir, "db.json");
@@ -106,27 +107,5 @@ function updateDb(db) {
 function Note(title, text) {
     this.title = title;
     this.text = text;
-    this.id = UID(16, title + text);
-}
-
-// Generate a unique ID
-function UID(length, salt) {
-    const charset = "abcdefghijklmnopqrstuvwxyz0123456789";
-    let output = "";
-    length = Math.max(0, Math.floor(length));
-    for (let i = 0; i < length; i++) {
-        let index = randomIndex(charset);
-        if (salt) {
-            index = (index + salt.charCodeAt(randomIndex(salt))) % charset.length;
-        }
-        output += charset[index];
-    }
-    return output;
-}
-
-// Get a random index from an iterable with a length
-function randomIndex(iterable) {
-    if (iterable.length) {
-        return Math.floor(Math.random() * iterable.length);
-    }
+    this.id = uuid.v4();
 }
